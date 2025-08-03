@@ -1,10 +1,11 @@
 import React from "react";
+import Login from "../components/auth/Login";
 
 const Home = () => {
   return (
-    <>
-      <h1 class="text-3xl font-bold underline">Home page</h1>
-    </>
+    <div className="page-container flex justify-center items-center h-screen">
+      <Login />
+    </div>
   );
 };
 

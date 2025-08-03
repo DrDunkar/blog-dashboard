@@ -1,0 +1,11 @@
+:root {
+  --primary-gray: #d5d5d5;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.page-container {
+  padding: 0rem 6rem;
+}
