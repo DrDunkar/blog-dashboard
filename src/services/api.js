@@ -21,3 +21,21 @@ export const userLogin = async (payload) => {
   } finally {
   }
 };
+
+export const fetchBlogData = async () => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API}/posts`);
+    return res?.data;
+  } catch {
+  } finally {
+  }
+};
+
+export const deleteBlog = async (id) => {
+  try {
+    const res = await axios.delete(`${process.env.REACT_APP_API}/posts/${id}`);
+    return res;
+  } catch {
+  } finally {
+  }
+};

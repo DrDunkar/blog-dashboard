@@ -7,6 +7,7 @@ import Notfound from "../../pages/notfound";
 import Dashboard from "../../pages/admin/dashboard";
 import ProtectedRoute from "../../utils/ProtectedRoutes";
 import Blog from "../../pages/admin/blog";
+import CreateBLog from "../../pages/admin/createBlog";
 import AdminLayout from "../admin/AdminLayout";
 
 const Router = () => {
@@ -40,6 +41,14 @@ const Router = () => {
           element: (
             <ProtectedRoute>
               <Blog />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/blog/create",
+          element: (
+            <ProtectedRoute>
+              <CreateBLog />
             </ProtectedRoute>
           ),
         },
