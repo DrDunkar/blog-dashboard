@@ -1,24 +1,39 @@
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formValidation } from "../../utils/formValidation";
+import { userLogin } from "../../services/api";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState(null);
   const [showPassword, setShowPassword] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = formValidation(formData);
     setErrors(validationErrors);
+    const payload = {
+      formData,
+      expiresInMins: 30,
+    };
+    // const res = userLogin(payload);
+
+    if (!errors) {
+      Cookies.set("email", formData?.email);
+      toast.success("Login successful! ✅");
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -83,7 +98,7 @@ const Login = () => {
       </form>
 
       <p className="text-center">
-        Don't have account?{" "}
+        Don't have an account?{" "}
         <Link to="/signup" className="text-blue-800">
           {" "}
           Register

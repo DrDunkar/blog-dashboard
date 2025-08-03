@@ -4,6 +4,10 @@ import Home from "../../pages";
 import Signup from "../../pages/signup";
 import Layout from "../layout/layout";
 import Notfound from "../../pages/notfound";
+import Dashboard from "../../pages/admin/dashboard";
+import ProtectedRoute from "../../utils/ProtectedRoutes";
+import Blog from "../../pages/admin/blog";
+import AdminLayout from "../admin/AdminLayout";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -14,6 +18,31 @@ const Router = () => {
       children: [
         { path: "", element: <Home /> },
         { path: "signup", element: <Signup /> },
+      ],
+    },
+
+    // admin routes
+    {
+      path: "/",
+      element: <AdminLayout />,
+      errorElement: <Notfound />,
+      children: [
+        {
+          path: "dashboard",
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/blog",
+          element: (
+            <ProtectedRoute>
+              <Blog />
+            </ProtectedRoute>
+          ),
+        },
       ],
     },
   ]);
