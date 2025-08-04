@@ -25,7 +25,7 @@ const Register = () => {
   };
 
   return (
-    <div className="shadow-md p-[2rem]  w-[32rem] ">
+    <div className="register shadow-md p-[2rem]  w-[32rem] ">
       <div className="text-2xl text-center font-semibold ">
         Register Account{" "}
       </div>

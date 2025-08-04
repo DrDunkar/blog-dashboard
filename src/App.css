@@ -1,8 +1,31 @@
 :root {
   --primary-gray: #d5d5d5;
+  --background: #ffffff;
+  --text: #000000;
+}
+
+.dark {
+  --background: #1a202c;
+  --text: #ffffff;
+}
+.dark .login {
+  background-color: #080606;
+}
+.dark .login label {
+  color: white;
+}
+
+.dark .register {
+  background-color: #080606;
+}
+.dark .register label {
+  color: white;
 }
 
 body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: all 0.3s ease;
   font-family: "Poppins", sans-serif;
 }
 
@@ -16,4 +39,10 @@ body {
   max-height: 18;
   overflow: hidden;
   overflow-y: auto;
+}
+
+@media screen and (max-width: 760px) {
+  .page-container {
+    padding: 0rem 1rem;
+  }
 }

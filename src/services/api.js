@@ -13,10 +13,8 @@ export const userLogin = async (payload) => {
       payload,
       contentType
     );
-    console.log("Login success:", res);
     return res.data;
   } catch (error) {
-    console.log("err", error);
     console.error("Login failed:", error.response?.data || error.message);
   } finally {
   }

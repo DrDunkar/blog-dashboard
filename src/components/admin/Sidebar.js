@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 bg-white shadow-md hidden md:block">
+    <aside className="w-30 md:w-64 bg-white shadow-md">
       <div className="p-4 text-2xl font-bold border-b">My blog</div>
       <nav className="mt-4 space-y-2 px-4">
         <Link
