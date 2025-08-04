@@ -5,8 +5,11 @@ import { createBlog } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { formValidation } from "../../utils/formValidation";
 import { toast } from "react-toastify";
+import { useBlogStore } from "../../store/blogItem";
 
-const Blogcreate = () => {
+const Blogcreate = (props) => {
+  const { items, fetchItems, addItem, updateItem } = useBlogStore();
+
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -28,6 +31,7 @@ const Blogcreate = () => {
       };
       const res = await createBlog(payload);
       if (res) {
+        addItem(payload);
         toast.success("Create successful! ✅");
         setBtnLoading(false);
         navigate("/dashboard/blog");
@@ -76,7 +80,7 @@ const Blogcreate = () => {
           type="submit"
           className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
         >
-          {btnLoading ? "Posting ..." : "Publish"}
+          {btnLoading ? "Posting ..." : props?.blogId ? "Update" : "Publish"}
         </button>
       </form>
     </>

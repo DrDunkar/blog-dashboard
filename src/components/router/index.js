@@ -9,6 +9,7 @@ import ProtectedRoute from "../../utils/ProtectedRoutes";
 import Blog from "../../pages/admin/blog";
 import CreateBLog from "../../pages/admin/createBlog";
 import AdminLayout from "../admin/AdminLayout";
+import EditBlog from "../../pages/admin/editBlog";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -24,7 +25,7 @@ const Router = () => {
 
     // admin routes
     {
-      path: "/",
+      path: "",
       element: <AdminLayout />,
       errorElement: <Notfound />,
       children: [
@@ -49,6 +50,14 @@ const Router = () => {
           element: (
             <ProtectedRoute>
               <CreateBLog />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/blog/edit/:id",
+          element: (
+            <ProtectedRoute>
+              <EditBlog />
             </ProtectedRoute>
           ),
         },

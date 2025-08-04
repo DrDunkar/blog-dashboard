@@ -3,27 +3,31 @@ import { fetchBlogData, deleteBlog } from "../../services/api";
 import ConfirmaModal from "../../components/ConfirmaModal";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useBlogStore } from "../../store/blogItem";
+import parse from "html-react-parser";
 
 const Blog = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState({
-    data: [],
     loading: false,
     error: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
 
-  console.log("blog", blogs, isModalOpen);
+  const { items, fetchItems, addItem, updateItem, deleteItem } = useBlogStore();
 
   useEffect(() => {
-    getBlog();
+    if (items?.length === 0) {
+      getBlog();
+    }
   }, []);
 
   const getBlog = async () => {
     try {
       setBlogs((prev) => ({ ...prev, loading: true }));
       const res = await fetchBlogData();
+      fetchItems(res);
       setBlogs((prev) => ({ ...prev, data: res }));
     } catch (err) {
       setBlogs((prev) => ({ ...prev, error: true }));
@@ -35,7 +39,9 @@ const Blog = () => {
   const handleCreate = () => {
     navigate("/dashboard/blog/create");
   };
-  const handleUpdate = () => {};
+  const handleUpdate = (id) => {
+    navigate(`/dashboard/blog/edit/${id}`);
+  };
 
   const confirmDelete = async () => {
     try {
@@ -43,8 +49,7 @@ const Blog = () => {
       const blogId = isModalOpen;
       const res = await deleteBlog(blogId);
       if (res) {
-        const items = blogs?.data?.filter((item) => item?.id !== isModalOpen);
-        setBlogs((prev) => ({ ...prev, data: items }));
+        deleteItem(blogId);
         setIsModalOpen(false);
         toast.success("Delete successful! ✅");
       }
@@ -75,19 +80,22 @@ const Blog = () => {
               <span className="my-[1rem]">Loading data .... </span>
             ) : (
               <>
-                {blogs.data?.length === 0 ? (
+                {items?.length === 0 ? (
                   <p className="text-gray-500">No blogs available.</p>
                 ) : (
                   <div className="space-y-4">
-                    {blogs.data?.map((blog) => (
+                    {items?.map((blog) => (
                       <div
                         key={blog.id}
                         className="border p-4 rounded-md bg-gray-50 shadow-sm"
                       >
                         <div className="flex justify-between items-center">
-                          <h2 className="text-lg font-semibold">
-                            {blog.title}
-                          </h2>
+                          <div>
+                            <h2 className="text-lg font-semibold">
+                              {blog.title}
+                            </h2>
+                            <p>{parse(blog?.body)}</p>
+                          </div>
                           <div className="flex items-center gap-2 cursor-pointer">
                             <button
                               onClick={() => handleUpdate(blog.id)}
