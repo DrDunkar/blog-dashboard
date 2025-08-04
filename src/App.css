@@ -3,6 +3,10 @@
   --background: #ffffff;
   --text: #000000;
 }
+.light .login,
+.register input::placeholder {
+  color: #0e0c0c;
+}
 
 .dark {
   --background: #1a202c;
@@ -14,12 +18,18 @@
 .dark .login label {
   color: white;
 }
+.dark .login input::placeholder {
+  color: #ccc;
+}
 
 .dark .register {
   background-color: #080606;
 }
 .dark .register label {
   color: white;
+}
+.dark .register input::placeholder {
+  color: #ccc;
 }
 
 body {
