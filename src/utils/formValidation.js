@@ -1,12 +1,23 @@
-export const formValidation = (formData) => {
-  const newErrors = {};
-  if (formData) {
-    if (!formData.email.includes("@")) newErrors.email = "Invalid email.";
-    if (formData.password.length < 6) newErrors.password = "Min 6 characters.";
-    if (formData?.confirmpassword) {
-      if (formData?.password !== formData?.confirmpassword)
-        newErrors.confirmpassword = "Password doesnot match";
-    }
-    return newErrors;
+export const formValidation = (formData = {}) => {
+  const errors = {};
+
+  const { email, password, confirmpassword, content } = formData;
+
+  if (!email?.includes("@")) {
+    errors.email = "Invalid email.";
   }
+
+  if (!password || password.length < 6) {
+    errors.password = "Password must be at least 6 characters.";
+  }
+
+  if (confirmpassword && password !== confirmpassword) {
+    errors.confirmpassword = "Passwords do not match.";
+  }
+
+  if (!content?.trim()) {
+    errors.content = "Content is required.";
+  }
+
+  return errors;
 };

@@ -23,17 +23,15 @@ const Login = () => {
     e.preventDefault();
     const validationErrors = formValidation(formData);
     setErrors(validationErrors);
+    if (errors === null) return;
     const payload = {
       formData,
       expiresInMins: 30,
     };
     // const res = userLogin(payload);
-
-    if (!errors) {
-      Cookies.set("email", formData?.email);
-      toast.success("Login successful! ✅");
-      navigate("/dashboard");
-    }
+    Cookies.set("email", formData?.email);
+    toast.success("Login successful! ✅");
+    navigate("/dashboard");
   };
 
   return (

@@ -31,6 +31,24 @@ export const fetchBlogData = async () => {
   }
 };
 
+export const createBlog = async (payload) => {
+  const contentType = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API}/posts`,
+      payload,
+      contentType
+    );
+    return res;
+  } catch {
+  } finally {
+  }
+};
+
 export const deleteBlog = async (id) => {
   try {
     const res = await axios.delete(`${process.env.REACT_APP_API}/posts/${id}`);

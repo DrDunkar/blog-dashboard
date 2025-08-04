@@ -9,3 +9,11 @@ body {
 .page-container {
   padding: 0rem 6rem;
 }
+
+.ck-editor__main,
+.ck-content {
+  height: 18rem;
+  max-height: 18;
+  overflow: hidden;
+  overflow-y: auto;
+}
