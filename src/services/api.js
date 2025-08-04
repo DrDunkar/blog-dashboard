@@ -49,6 +49,15 @@ export const createBlog = async (payload) => {
   }
 };
 
+export const updateBlog = async (id) => {
+  try {
+    const res = await axios.put(`${process.env.REACT_APP_API}/posts/${id}`);
+    return res;
+  } catch {
+  } finally {
+  }
+};
+
 export const deleteBlog = async (id) => {
   try {
     const res = await axios.delete(`${process.env.REACT_APP_API}/posts/${id}`);

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { createBlog } from "../../services/api";
+import { createBlog, updateBlog } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { formValidation } from "../../utils/formValidation";
 import { toast } from "react-toastify";
@@ -13,10 +13,24 @@ const Blogcreate = (props) => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+    id: "",
   });
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
   const [errors, setErrors] = useState(null);
+
+  useEffect(() => {
+    if (props?.blogId) {
+      const editItem = props?.blogId
+        ? items?.find((item) => item?.id == props?.blogId)
+        : null;
+      setFormData({
+        title: editItem.title,
+        content: editItem.body,
+        id: editItem.id,
+      });
+    }
+  }, [props?.blogId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,9 +54,29 @@ const Blogcreate = (props) => {
       setBtnLoading(false);
     }
   };
+
+  const handleUpdate = async (e) => {
+    const payload = {
+      title: formData?.title,
+      body: formData?.content,
+    };
+    e.preventDefault();
+    try {
+      setBtnLoading(true);
+      await updateBlog(formData?.id);
+    } catch {
+      setBtnLoading(false);
+    } finally {
+      updateItem(formData?.id, payload);
+      toast.success("Update successful! ✅");
+      setBtnLoading(false);
+      navigate("/dashboard/blog");
+    }
+  };
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={props?.blogId ? handleUpdate : handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2 text-sm font-medium">Title</label>
           <input
@@ -78,7 +112,7 @@ const Blogcreate = (props) => {
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
         >
           {btnLoading ? "Posting ..." : props?.blogId ? "Update" : "Publish"}
         </button>

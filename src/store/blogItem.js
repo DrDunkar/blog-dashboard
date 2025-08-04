@@ -16,10 +16,10 @@ export const useBlogStore = create((set) => ({
     })),
 
   // Update
-  updateItem: (id, newName) =>
+  updateItem: (id, editItem) =>
     set((state) => ({
       items: state.items.map((item) =>
-        item.id === id ? { ...item, name: newName } : item
+        item.id === id ? { ...item, ...editItem } : item
       ),
     })),
 
